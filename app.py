@@ -2,13 +2,40 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# Page Layout and Design Enhancements
+st.set_page_config(page_title="Educational Levels in Lebanon", layout="wide")
+
+# Custom CSS for background and font styles
+st.markdown(
+    """
+    <style>
+    .main {
+        background-image: url('https://images.unsplash.com/photo-1585431599340-e5bc3f0d189a');
+        background-size: cover;
+        background-color: rgba(255, 255, 255, 0.8);
+        background-blend-mode: lighten;
+    }
+    h1, h2 {
+        color: #2E86C1;
+        font-family: 'Arial', sans-serif;
+    }
+    .stPlotlyChart {
+        background-color: #f0f8ff;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
 # App Title
-st.title("Educational Levels by Town in Lebanon")
+st.title("📘 Educational Levels by Town in Lebanon")
 
 # Description of the app
 st.write("""
-This app allows you to explore the educational levels across various towns in Lebanon. 
-You can select multiple towns and educational levels to visualize the data in both bar charts and heatmaps.
+This interactive app allows you to explore the educational levels across various towns in Lebanon. 
+You can select multiple towns and educational levels to visualize the data in both bar charts and heatmaps. 
+Understanding these trends can provide insights into regional disparities in education.
 """)
 
 # Load the dataset
@@ -16,7 +43,7 @@ data = pd.read_csv('educational levels.csv')
 cleaned_data = data.dropna()
 
 # --------- Bar Chart Section ---------
-st.header("Comparing Educational Levels Across Selected Towns")
+st.header("📊 Comparing Educational Levels Across Selected Towns")
 st.write("""
 This bar chart compares the educational levels of residents in the selected towns. 
 Select multiple towns and educational levels to explore how educational attainment varies across regions.
@@ -57,8 +84,10 @@ if not comparison_df_bar.empty:
 else:
     st.write("Please select both towns and educational levels to see the comparison.")
 
+st.divider()  # Divider for a cleaner layout
+
 # --------- Heatmap Section ---------
-st.header("Heatmap of Educational Levels by Town")
+st.header("🌡️ Heatmap of Educational Levels by Town")
 st.write("""
 This heatmap shows the intensity of educational levels across different towns. 
 You can use it to visually compare educational levels and see patterns across regions.
@@ -92,3 +121,23 @@ if not comparison_df_heatmap.empty:
     st.plotly_chart(fig_heatmap)
 else:
     st.write("Please select both towns and educational levels to see the heatmap.")
+
+st.divider()
+
+# Footer Section with additional insights
+st.write("""
+**Insights**: 
+Lebanon has a diverse educational landscape, with towns in some regions showing a high percentage of residents with higher education, while others have a larger proportion of illiterate or primary-level educated individuals. 
+This data highlights the regional educational disparities and offers a glimpse into areas that may need further development and support.
+""")
+st.markdown(
+    """
+    <style>
+    .main {
+        background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+        padding: 10px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
